@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  id="Definitions_TrendScout" targetNamespace="http://trendscout.ru/bpmn">
+  <bpmn:collaboration id="Collab">
+    <bpmn:participant id="Pool_TS" name="TrendScout" processRef="Process_TS"/>
+    <bpmn:participant id="Pool_AR" name="A&amp;R-менеджер" processRef="Process_AR"/>
+    <bpmn:messageFlow id="MF1" name="алерт" sourceRef="Task_Notify" targetRef="Start_AR"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_TS" isExecutable="false">
+    <bpmn:laneSet id="Lanes">
+      <bpmn:lane id="Lane_Ing" name="Ingestion">
+        <bpmn:flowNodeRef>Start_Week</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Ingest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Full</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Buffer</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_An" name="Analytics">
+        <bpmn:flowNodeRef>Task_Chart</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Rules</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Break</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Alert</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_None</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Not" name="Уведомления">
+        <bpmn:flowNodeRef>Task_Notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Revise</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Week" name="Таймер: неделя">
+      <bpmn:timerEventDefinition/>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Ingest" name="Приём батчей площадок"/>
+    <bpmn:exclusiveGateway id="GW_Full" name="Полнота ≥ SLA?"/>
+    <bpmn:task id="Task_Buffer" name="Буфер поздних данных (FR-04)"/>
+    <bpmn:task id="Task_Chart" name="Пересчёт RegionalChart"/>
+    <bpmn:task id="Task_Rules" name="Правила FR-01…05"/>
+    <bpmn:exclusiveGateway id="GW_Break" name="Прорыв?"/>
+    <bpmn:task id="Task_Alert" name="Создать Alert (NEW / provisional)"/>
+    <bpmn:endEvent id="End_None" name="Без алерта"/>
+    <bpmn:task id="Task_Notify" name="Push / e-mail подписчикам"/>
+    <bpmn:boundaryEvent id="Boundary_72h" name="72ч" attachedToRef="Task_Notify">
+      <bpmn:timerEventDefinition/>
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Task_Revise" name="Ревизия алерта (FR-04)"/>
+    <bpmn:sequenceFlow id="F1" sourceRef="Start_Week" targetRef="Task_Ingest"/>
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_Ingest" targetRef="GW_Full"/>
+    <bpmn:sequenceFlow id="F3" name="нет" sourceRef="GW_Full" targetRef="Task_Buffer"/>
+    <bpmn:sequenceFlow id="F4" name="да" sourceRef="GW_Full" targetRef="Task_Chart"/>
+    <bpmn:sequenceFlow id="F5" sourceRef="Task_Buffer" targetRef="Task_Chart"/>
+    <bpmn:sequenceFlow id="F6" sourceRef="Task_Chart" targetRef="Task_Rules"/>
+    <bpmn:sequenceFlow id="F7" sourceRef="Task_Rules" targetRef="GW_Break"/>
+    <bpmn:sequenceFlow id="F8" name="нет" sourceRef="GW_Break" targetRef="End_None"/>
+    <bpmn:sequenceFlow id="F9" name="да" sourceRef="GW_Break" targetRef="Task_Alert"/>
+    <bpmn:sequenceFlow id="F10" sourceRef="Task_Alert" targetRef="Task_Notify"/>
+    <bpmn:sequenceFlow id="F11" sourceRef="Boundary_72h" targetRef="Task_Revise"/>
+    <bpmn:sequenceFlow id="F12" sourceRef="Task_Revise" targetRef="Task_Rules"/>
+  </bpmn:process>
+  <bpmn:process id="Process_AR" isExecutable="false">
+    <bpmn:startEvent id="Start_AR" name="Алерт получен">
+      <bpmn:messageEventDefinition/>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Review" name="Разбор: IN_REVIEW"/>
+    <bpmn:exclusiveGateway id="GW_Conf" name="Подтверждён?"/>
+    <bpmn:endEvent id="End_Conf" name="CONFIRMED → букинг"/>
+    <bpmn:endEvent id="End_Rej" name="REJECTED с причиной"/>
+    <bpmn:sequenceFlow id="A1" sourceRef="Start_AR" targetRef="Task_Review"/>
+    <bpmn:sequenceFlow id="A2" sourceRef="Task_Review" targetRef="GW_Conf"/>
+    <bpmn:sequenceFlow id="A3" name="да" sourceRef="GW_Conf" targetRef="End_Conf"/>
+    <bpmn:sequenceFlow id="A4" name="нет" sourceRef="GW_Conf" targetRef="End_Rej"/>
+  </bpmn:process>
+</bpmn:definitions>

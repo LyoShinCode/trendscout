@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrendScout — анализ музыкальных трендов · ИАР Бородуля А.В.</title>
+<meta name="description" content="ПО для автоматизированного анализа структурированных данных: детекция прорывов исполнителей алгоритмом RB-DETECT.">
+<script>try{var t=localStorage.getItem('ts-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Mono:wght@400;500&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/views.css">
+</head>
+<body data-view="dashboard">
+
+<nav>
+  <div class="brand">
+    <span class="mark">TS</span>
+    <span class="name">TrendScout</span>
+    <span class="tag">ИАР · 2026</span>
+  </div>
+  <div class="navlinks" id="navLinks">
+    <a href="#/dashboard" data-view="dashboard">Дашборд</a>
+    <a href="#/alerts" data-view="alerts">Сигналы</a>
+    <a href="#/artists" data-view="artists">Исполнители</a>
+    <a href="#/help" data-view="help">Как это работает</a>
+    <a href="#/demo" data-view="demo">Сценарий демо</a>
+    <a href="#/docs" data-view="docs">Документация</a>
+    <a href="/docs" target="_blank" rel="noopener">API ↗</a>
+  </div>
+  <div class="navtools">
+    <button class="tool" id="themeBtn" title="Светлая / тёмная тема">◐ <span>Тема</span></button>
+    <button class="tool" id="soundBtn" title="Звук уведомлений">🔈 <span>Звук выкл</span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="view" id="view-dashboard"></section>
+  <section class="view" id="view-alerts"></section>
+  <section class="view" id="view-artists"></section>
+  <section class="view" id="view-help"></section>
+  <section class="view" id="view-demo"></section>
+  <section class="view" id="view-docs"></section>
+  <noscript><div class="empty">Для работы приложения нужен включённый JavaScript.</div></noscript>
+  <footer>
+    <span>TrendScout · индивидуальная аттестационная работа · <strong>Бородуля Алексей Викторович</strong></span>
+    <span>Данные учебные (синтетические, seed 20261109) · FastAPI + SQLite + ES-модули</span>
+  </footer>
+</main>
+
+<div id="drawerWrap"><div id="drawerBack"></div><div id="drawer">
+  <button class="btn sm" id="drawerClose">✕ Закрыть</button><div id="drawerBody"></div>
+</div></div>
+<div id="demoHud"></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

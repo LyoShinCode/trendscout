@@ -1,0 +1,73 @@
+# ============================================================
+# TrendScout · игнорируем генерируемое и локальное
+# ============================================================
+
+# --- Python: байткод и служебное ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+wheels/
+
+# --- Виртуальные окружения ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Тесты и покрытие ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+
+# --- База данных: создаётся из seed, в репозитории не хранится ---
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# --- IDE: PyCharm и VS Code (настройки личные) ---
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+
+# --- Логи и временные файлы ---
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# --- Мусор операционных систем ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# --- Секреты и локальные конфиги (в проекте не используются, но страховка) ---
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# --- Node (в проекте не используется; защита от случайного npm init) ---
+node_modules/
+npm-debug.log*
+yarn-error.log*

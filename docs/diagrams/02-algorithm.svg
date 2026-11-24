@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 860" font-family="IBM Plex Sans, sans-serif">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#403C36"/></marker></defs>
+<style>
+ .t{fill:#FFFFFF;stroke:#12494F;stroke-width:1.2}
+ .p{fill:#FFFFFF;stroke:#D2CBBE;stroke-width:1.2}
+ .d{fill:#FBFAF6;stroke:#A96A05;stroke-width:1.4}
+ .g{fill:#FBEAE8;stroke:#B3261E;stroke-width:1.2}
+ .ok{fill:#E8F2E9;stroke:#2F7A45;stroke-width:1.2}
+ .l{stroke:#403C36;stroke-width:1.3;fill:none;marker-end:url(#a)}
+ .lb{fill:#403C36;font:600 11px 'IBM Plex Sans'}
+ .tx{fill:#1C1A17;font:12.5px 'IBM Plex Sans'}
+ .ti{fill:#FFFFFF;font:600 12.5px 'IBM Plex Sans'}
+ .sm{fill:#6E685E;font:11px 'IBM Plex Sans'}
+</style>
+<rect width="1000" height="860" fill="#F6F4EF"/>
+<text x="30" y="28" fill="#12494F" font-size="15" font-weight="600">RB-DETECT · порогово-контекстная детекция аномалий временных рядов</text>
+
+<circle cx="380" cy="60" r="14" class="t" fill="#12494F"/>
+<text x="404" y="65" class="tx">Старт: недельный батч выгрузок площадок</text>
+<path class="l" d="M380,74 V96"/>
+<rect class="p" x="240" y="96" width="280" height="46"/><text x="256" y="116" class="tx">Агрегация: RegionalChart + ChartEntry</text><text x="256" y="132" class="sm">по каждому региону, полнота данных</text>
+<path class="l" d="M380,142 V164"/>
+<rect class="p" x="240" y="164" width="280" height="46"/><text x="256" y="184" class="tx">Признаки для артистов из Top-N</text><text x="256" y="200" class="sm">позиция · история · база · каталог · дебют · рост</text>
+<path class="l" d="M380,210 V236"/>
+
+<path class="d" d="M380,236 L520,286 L380,336 L240,286 Z"/>
+<text x="380" y="282" text-anchor="middle" class="tx">FR-05: счётчик обнулён</text>
+<text x="380" y="298" text-anchor="middle" class="tx">и истинная база ≥ порога?</text>
+<path class="l" d="M520,286 H640"/><text x="560" y="278" class="lb">да</text>
+<rect class="g" x="640" y="262" width="300" height="48"/><text x="656" y="282" class="tx">Предохранитель: журнал «Проверка»,</text><text x="656" y="298" class="tx">ложный сигнал НЕ создаётся</text>
+<path class="l" d="M790,310 V780 H540"/>
+<path class="l" d="M380,336 V362"/><text x="390" y="354" class="lb">нет</text>
+
+<path class="d" d="M380,362 L520,412 L380,462 L240,412 Z"/>
+<text x="380" y="408" text-anchor="middle" class="tx">FR-02: дебют ≤ N мес</text>
+<text x="380" y="424" text-anchor="middle" class="tx">и ранее вне Top-popular_rank?</text>
+<path class="l" d="M520,412 H640"/><text x="560" y="404" class="lb">да</text>
+<rect class="ok" x="640" y="388" width="300" height="48"/><text x="656" y="408" class="tx">Тип NEWCOMER</text><text x="656" y="424" class="sm">правило FR-02</text>
+<path class="l" d="M790,436 V600 H540"/>
+<path class="l" d="M380,462 V488"/><text x="390" y="480" class="lb">нет</text>
+
+<path class="d" d="M380,488 L520,538 L380,588 L240,538 Z"/>
+<text x="380" y="534" text-anchor="middle" class="tx">FR-01: каталог ≥ 12 мес,</text>
+<text x="380" y="550" text-anchor="middle" class="tx">база &lt; порога, история чистая?</text>
+<path class="l" d="M520,538 H640"/><text x="560" y="530" class="lb">да</text>
+<rect class="ok" x="640" y="514" width="300" height="48"/><text x="656" y="534" class="tx">Тип SLEEPER</text><text x="656" y="550" class="sm">правило FR-01</text>
+<path class="l" d="M790,562 V600"/>
+<path class="l" d="M380,588 V614"/><text x="390" y="606" class="lb">нет</text>
+
+<path class="d" d="M380,614 L520,664 L380,714 L240,664 Z"/>
+<text x="380" y="660" text-anchor="middle" class="tx">FR-03: медиа-событие активно</text>
+<text x="380" y="676" text-anchor="middle" class="tx">и рост ≥ ×2.5 к медиане?</text>
+<path class="l" d="M520,664 H640"/><text x="560" y="656" class="lb">да</text>
+<rect class="ok" x="640" y="640" width="300" height="48"/><text x="656" y="660" class="tx">Тип VIRAL</text><text x="656" y="676" class="sm">правило FR-03</text>
+<path class="l" d="M790,688 V700 H560 V724"/>
+<path class="l" d="M380,714 V740"/><text x="390" y="732" class="lb">нет</text>
+<rect class="g" x="240" y="740" width="280" height="40"/><text x="256" y="764" class="tx">Журнал «Отказ»: какое условие не выполнено</text>
+<path class="l" d="M380,780 V800"/>
+
+<rect class="p" x="240" y="600" width="0" height="0"/>
+<rect class="t" x="240" y="800" width="560" height="44" fill="#12494F" stroke="#12494F"/>
+<text x="256" y="818" class="ti">Создание сигнала: confidence, дедупликация 8 недель,</text>
+<text x="256" y="834" class="ti">флаг provisional при неполных данных → журнал и аудит</text>
+<text x="820" y="800" class="sm">пост-шаги: FR-04 ревизия provisional,</text>
+<text x="820" y="816" class="sm">FR-03 отчёт затухания после события</text>
+</svg>

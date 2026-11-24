@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ИАР · TrendScout · Бородуля А.В.</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0E1A;--line:#262E56;--text:#E9EBF8;--muted:#9AA2CC;--cyan:#22D3EE;--magenta:#FF2E88;--lime:#A3E635;--amber:#FFB020;--blue:#5B8CFF;--grad:linear-gradient(100deg,var(--cyan),var(--blue) 45%,var(--magenta));--disp:'Unbounded',system-ui,sans-serif;--body:'Manrope',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:16px/1.6 var(--body);min-height:100vh;background-image:radial-gradient(40% 32% at 15% 18%,#22D3EE1c,transparent 70%),radial-gradient(36% 30% at 85% 12%,#FF2E881e,transparent 70%),radial-gradient(44% 38% at 72% 88%,#5B8CFF18,transparent 70%)}
+.deck{max-width:1180px;margin:0 auto;padding:34px 26px 60px}
+.slide{display:none;min-height:72vh;flex-direction:column;justify-content:center;border:1px solid var(--line);border-radius:20px;padding:44px clamp(20px,5vw,64px);background:linear-gradient(155deg,#141A33ee,#0C1024ee);position:relative;overflow:hidden;animation:in .5s cubic-bezier(.2,.8,.2,1)}
+.slide.on{display:flex}
+@keyframes in{from{opacity:0;transform:translateX(28px) scale(.985)}}
+.slide::before{content:'';position:absolute;top:-130px;right:-130px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,#FF2E8822,transparent 70%);pointer-events:none}
+.kicker{font:700 12px var(--mono);letter-spacing:2.6px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+h1{font:800 clamp(24px,3.6vw,44px)/1.18 var(--disp);max-width:940px}
+h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font:600 20px var(--disp);color:var(--cyan);margin:18px 0 8px}
+.body{margin-top:18px;font-size:clamp(14px,1.4vw,17px);color:#C9CEE8;max-width:960px}
+.body li{margin:10px 0 10px 24px}.body b{color:var(--text)}
+.stats{display:flex;flex-wrap:wrap;gap:30px;margin-top:26px}
+.stats b{display:block;font:800 32px var(--disp);color:var(--cyan)}
+.stats span{font-size:12.5px;color:var(--muted);font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.cards .c{border:1px solid var(--line);border-top:3px solid var(--cyan);border-radius:14px;padding:16px;background:#ffffff06}
+.cards .c:nth-child(2){border-top-color:var(--amber)}.cards .c:nth-child(3){border-top-color:var(--magenta)}
+.cards .t{font:700 12px var(--mono);letter-spacing:1px;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+th{font:10.5px var(--mono);letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid #1D2447;color:#C9CEE8}
+.quote{border-left:3px solid var(--magenta);padding:12px 18px;background:#FF2E880d;border-radius:0 12px 12px 0;margin-top:16px;font-family:var(--mono);font-size:13.5px}
+.pnav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:18px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#1B2244;color:var(--text);padding:10px 18px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.btn.pri{background:var(--grad);color:#06121A;border:none}
+.dots{display:flex;gap:7px}.dots i{width:9px;height:9px;border-radius:50%;background:#3A4478;cursor:pointer}
+.dots i.on{background:var(--grad);transform:scale(1.3)}
+.num{font:12px var(--mono);color:var(--muted)}
+.notes{display:none;margin-top:16px;border:1px dashed var(--line);border-radius:12px;padding:14px 18px;color:var(--muted);font-size:13.5px}
+body.notes-on .notes{display:block}
+.hint{text-align:center;color:#6B739E;font-size:12px;margin-top:12px}
+@media print{body{background:#fff;color:#111}.slide{display:flex!important;page-break-after:always;border:1px solid #ccc;background:#fff;min-height:auto}.pnav,.hint,.notes{display:none!important}h1 .g{color:#111;-webkit-text-fill-color:#111}.body,.body b,td{color:#222}}
+@media(max-width:800px){.cards{grid-template-columns:1fr}}
+</style></head>
+<body><div class="deck">
+<div id="slides"></div>
+<div class="pnav">
+  <button class="btn" id="prev">← Назад</button>
+  <div class="dots" id="dots"></div><span class="num" id="num"></span>
+  <button class="btn pri" id="next">Далее →</button>
+  <button class="btn" id="notesBtn">🎤 Заметки</button>
+  <button class="btn" onclick="window.print()">🖨 PDF</button>
+</div>
+<p class="hint">← → навигация · N — заметки докладчика · печать = PDF для комиссии</p>
+</div>
+<script>
+const SLIDES=[
+{k:'Индивидуальная аттестационная работа',t:'TrendScout — ПО для автоматизированного анализа <span class="g">структурированных данных</span>',
+ b:`<p>на основе алгоритма порогово-контекстной детекции аномалий временных рядов (RB-DETECT)</p>
+ <p style="margin-top:14px"><b>Автор:</b> Бородуля Алексей Викторович<br><b>Руководитель:</b> ____________________ · <b>Год:</b> 2026</p>
+ <div class="stats"><div><b>12</b><span>сущностей модели</span></div><div><b>5+5</b><span>FR и NFR с AC</span></div><div><b>16</b><span>эндпоинтов API</span></div><div><b>12</b><span>автотестов = AC</span></div></div>`,
+ n:'Назвать тему дословно по требованию ИАР: анализ структурированных данных, один реализованный алгоритм обработки.'},
+{k:'Раздел 1',t:'1. Цели и задачи <span class="g">ИАР</span>',
+ b:`<p><b>Цель:</b> разработать ПО, автоматически выявляющее аномальные всплески популярности исполнителей в структурированных данных о прослушиваниях, и оформить полный пакет артефактов системного аналитика.</p>
+ <h2>Задачи</h2><ul><li>Проанализировать предметную область и стейкхолдеров (агентства, A&R, маркетинг).</li>
+ <li>Сформировать требования BR/FR/NFR с приёмочными критериями и трассировкой.</li>
+ <li>Спроектировать доменную модель и REST-контракт (OpenAPI 3.0).</li>
+ <li>Реализовать алгоритм обработки данных и workflow результатов.</li>
+ <li>Покрыть приёмочные критерии автотестами; разработать MVP и документацию.</li></ul>`,
+ n:'Каждая задача закрывается конкретным артефактом — матрица трассировки на слайде 6.'},
+{k:'Раздел 2',t:'2. Этапы выполнения <span class="g">ИАР</span>',
+ b:`<table><thead><tr><th>Этап</th><th>Содержание</th><th>Артефакт</th></tr></thead><tbody>
+ <tr><td>1</td><td>Анализ домена и стейкхолдеров</td><td>docs/01 Vision & Scope</td></tr>
+ <tr><td>2</td><td>Требования + AC + трассировка</td><td>docs/03</td></tr>
+ <tr><td>3</td><td>Доменная модель, решения D-01…D-11</td><td>docs/02, models.py</td></tr>
+ <tr><td>4</td><td>Паспорт алгоритма, BPMN</td><td>docs/04, process.bpmn</td></tr>
+ <tr><td>5</td><td>REST-контракт</td><td>schemas.py, openapi.yaml</td></tr>
+ <tr><td>6–7</td><td>Бэкенд (FastAPI) и фронтенд (ES-модули)</td><td>backend/, frontend/</td></tr>
+ <tr><td>8</td><td>Автотесты AC и контракта</td><td>backend/tests, 12 тестов</td></tr>
+ <tr><td>9</td><td>Документация и презентация</td><td>docs/, presentation/</td></tr></tbody></table>`,
+ n:'Подчеркнуть порядок: сначала требования и модель, потом код. Код — реализация артефактов.'},
+{k:'Раздел 3 · результат',t:'3. Полученный результат — <span class="g">ПО TrendScout</span>',
+ b:`<ul><li><b>Вход:</b> 14 976 недельных батчей (12 артистов × 6 регионов × 4 платформы × 52 недели).</li>
+ <li><b>Обработка:</b> агрегация → признаки → guard → классификация → confidence → дедупликация → алерт.</li>
+ <li><b>Выход:</b> алерты SLEEPER / NEWCOMER / VIRAL с обоснованием, audit trail и workflow A&R.</li>
+ <li><b>Интерфейс:</b> дашборд, журнал rule-engine, конфигурирование порогов, карточки артистов с ISRC.</li>
+ <li><b>Контракт:</b> 16 эндпоинтов, OpenAPI генерируется из кода.</li></ul>`,
+ n:'Открыть дашборд вживую: «Неделя» ×3 → SLEEPER-алерт по «Кассете 90» → журнал правил.'},
+{k:'Раздел 3 · алгоритм',t:'Алгоритм <span class="g">RB-DETECT</span>',
+ b:`<div class="quote">growth = plays(t) / median(plays(t-4 … t-1))<br>
+ NEWCOMER: debut ≤ 6м ∧ ранее вне Top-popular_rank<br>
+ SLEEPER: каталог ≥ 12м ∧ база за 8 нед &lt; 50 000 ∧ lookback 24м вне Top-popular_rank<br>
+ VIRAL: активное медиа-событие ∧ growth ≥ 2.5<br>
+ confidence = 0.9 × полнота данных × маржа позиции</div>
+ <ul style="margin-top:14px"><li>Класс: детекция аномалий / классификация событий временного ряда.</li>
+ <li>Объяснимость важнее точности на холодном старте: нет размеченной выборки прорывов.</li>
+ <li>Все пороги — конфигурация (NFR-02), меняются без пересборки.</li></ul>`,
+ n:'Вопрос «почему не ML»: нет разметки, нужна объяснимость для бизнеса; ML — следующий этап.'},
+{k:'Раздел 3 · качество',t:'Требования → тесты: <span class="g">трассировка</span>',
+ b:`<table><thead><tr><th>AC</th><th>Смысл</th><th>Тест</th></tr></thead><tbody>
+ <tr><td>AC-01.1/2/3</td><td>SLEEPER: срабатывание, блокировка, конфигурируемость</td><td>test_ac_01_*</td></tr>
+ <tr><td>AC-02.1/2</td><td>NEWCOMER: дебют ≤ 6 мес, граница 7 мес</td><td>test_ac_02_*</td></tr>
+ <tr><td>AC-03.1/2</td><td>VIRAL: с событием и без</td><td>test_ac_03_*</td></tr>
+ <tr><td>AC-04.1</td><td>Задержка данных → provisional → отзыв</td><td>test_ac_04_1</td></tr>
+ <tr><td>AC-05.1</td><td>Покупка прав → ложный прорыв предотвращён</td><td>test_ac_05_1</td></tr>
+ <tr><td>UC-01</td><td>Недопустимый переход статуса → 409</td><td>test_api</td></tr></tbody></table>`,
+ n:'Запустить pytest -v вживую: 12 passed. Требования — проверяемое поведение, а не декларации.'},
+{k:'Раздел 3 · edge-cases',t:'Сценарии, которые <span class="g">валят наивную систему</span>',
+ b:`<div class="cards">
+ <div class="c"><div class="t" style="color:var(--amber)">FR-05 · ПОКУПКА ПРАВ</div>Площадка купила каталог → счётчик с нуля → наивный детектор кричит «прорыв!» на звезде. Guard сравнивает наблюдаемую базу с истинной → ложный алерт предотвращён.</div>
+ <div class="c"><div class="t" style="color:var(--cyan)">FR-04 · ЗАДЕРЖКА ДАННЫХ</div>Площадка молчит 72ч → чарт provisional → пришли данные, артист выпал из топа → алерт автоматически отозван.</div>
+ <div class="c"><div class="t" style="color:var(--magenta)">FR-03 · СКОРОПОРТЯЩИЙСЯ ХАЙП</div>После конца сериала — мониторинг затухания; падение &gt; 40% от пика → «окно возможностей ≤ 2 недель».</div></div>
+ <p style="margin-top:14px">Все три воспроизводятся кнопками в MVP и покрыты тестами.</p>`,
+ n:'Продемонстрировать кнопки сценариев вживую.'},
+{k:'Раздел 3 · дефекты',t:'Дефекты, найденные <span class="g">собственным валидатором</span>',
+ b:`<table><thead><tr><th>Дефект</th><th>Решение</th></tr></thead><tbody>
+ <tr><td>Демо-алерт противоречил правилу FR-05</td><td>инвариант согласованности данных с правилами</td></tr>
+ <tr><td>«База за всю историю» дисквалифицировала сам прорыв</td><td>окно baseline_weeks до детекции (D-09)</td></tr>
+ <tr><td>Порог Top-50 недостижим при 12 артистах</td><td>параметр popular_rank (D-10)</td></tr>
+ <tr><td>API-тесты мутировали демо-БД</td><td>изоляция через dependency_overrides (D-11)</td></tr></tbody></table>
+ <p style="margin-top:14px">Каждый дефект зафиксирован в ADR и закрыт инвариантом или тестом.</p>`,
+ n:'Сильнейший слайд: показывает инженерную зрелость, а не «код по туториалу».'},
+{k:'Выводы',t:'Итоги и <span class="g">развитие</span>',
+ b:`<ul><li>Цель ИАР достигнута: ПО анализирует структурированные данные реализованным алгоритмом и выдаёт объяснимый результат.</li>
+ <li>Требования трассированы от бизнес-целей до автотестов; документация не расходится с кодом.</li>
+ <li>Edge-cases выявлены на этапе анализа и реализованы как воспроизводимые сценарии.</li>
+ <li><b>Roadmap:</b> дневные чарты → калибровка порогов по истории → ML-скоринг с объяснимостью → интеграция с букингом.</li></ul>
+ <p style="margin-top:18px"><b>Спасибо. Готов к вопросам по любому артефакту — код, тесты и документация открыты.</b></p>`,
+ n:'Завершить демонстрацией: дашборд → алерт → audit trail → pytest.'}
+];
+let i=0;
+document.getElementById('slides').innerHTML=SLIDES.map((s,k)=>`<section class="slide ${k===0?'on':''}"><div class="kicker">${s.k}</div><h1>${s.t}</h1><div class="body">${s.b}</div><div class="notes"><b>Заметки:</b> ${s.n}</div></section>`).join('');
+const dots=document.getElementById('dots');
+dots.innerHTML=SLIDES.map((_,k)=>`<i class="${k===0?'on':''}" data-i="${k}"></i>`).join('');
+function go(n){i=Math.max(0,Math.min(SLIDES.length-1,n));
+document.querySelectorAll('.slide').forEach((e,k)=>e.classList.toggle('on',k===i));
+document.querySelectorAll('.dots i').forEach((e,k)=>e.classList.toggle('on',k===i));
+document.getElementById('num').textContent=`${i+1} / ${SLIDES.length}`;}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+dots.onclick=e=>{if(e.target.dataset.i)go(+e.target.dataset.i)};
+document.getElementById('notesBtn').onclick=()=>document.body.classList.toggle('notes-on');
+document.addEventListener('keydown',e=>{
+if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}
+if(e.key==='ArrowLeft')go(i-1);
+if(e.key.toLowerCase()==='n')document.body.classList.toggle('notes-on');});
+go(0);
+</script></body></html>

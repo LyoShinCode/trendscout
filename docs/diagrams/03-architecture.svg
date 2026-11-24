@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" font-family="IBM Plex Sans, sans-serif">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#403C36"/></marker></defs>
+<style>
+ .zone{fill:#FBFAF6;stroke:#D2CBBE;stroke-dasharray:5 4}
+ .p{fill:#FFFFFF;stroke:#D2CBBE;stroke-width:1.2}
+ .core{fill:#E7EFEF;stroke:#12494F;stroke-width:1.4}
+ .store{fill:#FFFFFF;stroke:#4E6E8E;stroke-width:1.4}
+ .l{stroke:#403C36;stroke-width:1.3;fill:none;marker-end:url(#a)}
+ .tx{fill:#1C1A17;font:12.5px 'IBM Plex Sans'}
+ .ti{fill:#0D373C;font:600 12.5px 'IBM Plex Sans'}
+ .sm{fill:#6E685E;font:11px 'IBM Plex Sans'}
+ .zt{fill:#12494F;font:600 13px 'IBM Plex Sans'}
+</style>
+<rect width="1120" height="620" fill="#F6F4EF"/>
+<text x="30" y="28" fill="#12494F" font-size="15" font-weight="600">Архитектура: реализованный MVP и целевой боевой контур</text>
+
+<rect class="zone" x="30" y="48" width="1060" height="200"/>
+<text class="zt" x="46" y="72">MVP · реализовано и защищается</text>
+<rect class="p" x="50" y="92" width="180" height="60"/><text class="ti" x="64" y="116">Генератор батчей</text><text class="sm" x="64" y="134">seed 20261109, 52 недели</text>
+<rect class="store" x="270" y="92" width="180" height="60"/><text class="ti" x="284" y="116">SQLite</text><text class="sm" x="284" y="134">listening_stats, чарты, алерты</text>
+<rect class="core" x="490" y="92" width="220" height="60"/><text class="ti" x="504" y="116">FastAPI: агрегация + RB-DETECT</text><text class="sm" x="504" y="134">правила FR-01…05, журнал</text>
+<rect class="p" x="750" y="92" width="160" height="60"/><text class="ti" x="764" y="116">Фронтенд</text><text class="sm" x="764" y="134">ES-модули, без сборки</text>
+<rect class="p" x="940" y="92" width="130" height="60"/><text class="ti" x="954" y="116">Swagger</text><text class="sm" x="954" y="134">/docs, openapi</text>
+<path class="l" d="M230,122 H270"/><path class="l" d="M450,122 H490"/><path class="l" d="M710,122 H750"/><path class="l" d="M710,140 H730 V190 H940 V140 H910"/>
+<text x="50" y="228" class="sm">Пороги правил: PUT /api/v1/config → таблица rule_params, без перезапуска (NFR-02)</text>
+
+<rect class="zone" x="30" y="272" width="1060" height="320"/>
+<text class="zt" x="46" y="296">Целевой контур · следующий этап</text>
+<rect class="p" x="50" y="316" width="150" height="56"/><text class="ti" x="62" y="338">API площадок</text><text class="sm" x="62" y="356">Spotify, Яндекс, VK…</text>
+<rect class="p" x="240" y="316" width="170" height="56"/><text class="ti" x="252" y="338">Ingestion Service</text><text class="sm" x="252" y="356">валидация контрактов</text>
+<rect class="core" x="450" y="316" width="170" height="56"/><text class="ti" x="462" y="338">Kafka</text><text class="sm" x="462" y="356">listening.raw, key=region+week</text>
+<rect class="core" x="660" y="316" width="190" height="56"/><text class="ti" x="672" y="338">Analytics Service</text><text class="sm" x="672" y="356">rule-engine, конфиг hot-reload</text>
+<rect class="store" x="890" y="316" width="180" height="56"/><text class="ti" x="902" y="338">PostgreSQL</text><text class="sm" x="902" y="356">партиции по месяцам</text>
+<path class="l" d="M200,344 H240"/><path class="l" d="M410,344 H450"/><path class="l" d="M620,344 H660"/><path class="l" d="M850,344 H890"/>
+<rect class="store" x="660" y="404" width="190" height="52"/><text class="ti" x="672" y="426">Redis</text><text class="sm" x="672" y="442">кэш чартов, дедуп алертов</text>
+<path class="l" d="M755,372 V404"/>
+<rect class="p" x="240" y="404" width="170" height="52"/><text class="ti" x="252" y="426">Media API (внешн.)</text><text class="sm" x="252" y="442">фильмы, тренды</text>
+<rect class="p" x="450" y="404" width="170" height="52"/><text class="ti" x="462" y="426">Enrichment</text><text class="sm" x="462" y="442">матчинг по ISRC, затухание</text>
+<path class="l" d="M410,430 H450"/><path class="l" d="M620,430 H660"/>
+<rect class="p" x="660" y="488" width="190" height="52"/><text class="ti" x="672" y="510">API Gateway + Notifier</text><text class="sm" x="672" y="526">OpenAPI, push/e-mail</text>
+<rect class="p" x="890" y="488" width="180" height="52"/><text class="ti" x="902" y="510">Потребители</text><text class="sm" x="902" y="526">агентства, A&amp;R, BI</text>
+<path class="l" d="M755,456 V488"/><path class="l" d="M850,514 H890"/>
+<text x="50" y="576" class="sm">Kafka сглаживает пик 50 млн событий/нед; Redis держит чтение чартов; источник данных отделён адаптером — правила от него не зависят.</text>
+</svg>

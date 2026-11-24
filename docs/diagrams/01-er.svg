@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 700" font-family="IBM Plex Sans, sans-serif">
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#403C36"/></marker></defs>
+<style>
+ .b{fill:#FFFFFF;stroke:#D2CBBE;stroke-width:1.2}
+ .h{fill:#12494F}.ht{fill:#FFFFFF;font:600 12.5px 'IBM Plex Sans'}
+ .f{fill:#403C36;font:10.5px 'IBM Plex Mono'}
+ .k{fill:#1F5FD0;font:600 10.5px 'IBM Plex Mono'}
+ .l{stroke:#403C36;stroke-width:1.3;fill:none;marker-end:url(#a)}
+ .c{fill:#6E685E;font:600 10px 'IBM Plex Mono'}
+ .n{fill:#6E685E;font:11px 'IBM Plex Sans'}
+</style>
+<rect width="1240" height="700" fill="#F6F4EF"/>
+<text x="30" y="26" fill="#12494F" font-size="15" font-weight="600">Модель данных TrendScout · 12 сущностей + конфигурация</text>
+
+<g><rect class="b" x="30" y="40" width="260" height="128"/><rect class="h" x="30" y="40" width="260" height="22" rx="0"/><text class="ht" x="40" y="55">Artist</text>
+<text class="k" x="40" y="76">id PK</text><text class="f" x="40" y="90">name, genres, debut_date</text><text class="f" x="40" y="104">kind, true_total_plays</text><text class="f" x="40" y="118">rights_platform, rights_week</text><text class="f" x="40" y="132">— истинная база (FR-05)</text><text class="f" x="40" y="146">— сброс счётчика площадки</text></g>
+
+<g><rect class="b" x="30" y="200" width="260" height="112"/><rect class="h" x="30" y="200" width="260" height="22"/><text class="ht" x="40" y="215">Track</text>
+<text class="k" x="40" y="236">id PK</text><text class="k" x="40" y="250">artist_id FK</text><text class="f" x="40" y="264">isrc UNIQUE (natural key)</text><text class="f" x="40" y="278">title, release_date</text><text class="f" x="40" y="292">bpm, key</text></g>
+
+<g><rect class="b" x="30" y="344" width="260" height="84"/><rect class="h" x="30" y="344" width="260" height="22"/><text class="ht" x="40" y="359">TrackPlatform · junction</text>
+<text class="k" x="40" y="380">track_id PK/FK</text><text class="k" x="40" y="394">platform_id PK/FK</text><text class="f" x="40" y="408">available_since (FR-01/05)</text><text class="f" x="40" y="422">external_id</text></g>
+
+<g><rect class="b" x="30" y="460" width="260" height="70"/><rect class="h" x="30" y="460" width="260" height="22"/><text class="ht" x="40" y="475">Platform · словарь</text>
+<text class="k" x="40" y="496">id PK</text><text class="f" x="40" y="510">name, share</text></g>
+
+<g><rect class="b" x="330" y="40" width="260" height="98"/><rect class="h" x="330" y="40" width="260" height="22"/><text class="ht" x="340" y="55">RegionalChart</text>
+<text class="k" x="340" y="76">id PK</text><text class="k" x="340" y="90">region_code FK, week</text><text class="f" x="340" y="104">completeness, provisional</text><text class="f" x="340" y="118">UQ(region_code, week)</text></g>
+
+<g><rect class="b" x="330" y="170" width="260" height="98"/><rect class="h" x="330" y="170" width="260" height="22"/><text class="ht" x="340" y="185">ChartEntry · D-02</text>
+<text class="k" x="340" y="206">id PK</text><text class="k" x="340" y="220">chart_id FK, artist_id FK</text><text class="f" x="340" y="234">position, plays</text><text class="f" x="340" y="248">delta_position</text></g>
+
+<g><rect class="b" x="330" y="300" width="260" height="70"/><rect class="h" x="330" y="300" width="260" height="22"/><text class="ht" x="340" y="315">Region · словарь</text>
+<text class="k" x="340" y="336">code PK</text><text class="f" x="340" y="350">name</text></g>
+
+<g><rect class="b" x="330" y="402" width="260" height="112"/><rect class="h" x="330" y="402" width="260" height="22"/><text class="ht" x="340" y="417">ListeningStat · D-05</text>
+<text class="k" x="340" y="438">id PK</text><text class="f" x="340" y="452">week</text><text class="k" x="340" y="466">artist_id, region_code, platform_id FK</text><text class="f" x="340" y="480">plays</text><text class="f" x="340" y="494">UQ(week, artist, region, platform)</text></g>
+
+<g><rect class="b" x="630" y="40" width="260" height="112"/><rect class="h" x="630" y="40" width="260" height="22"/><text class="ht" x="640" y="55">MediaEvent</text>
+<text class="k" x="640" y="76">id PK</text><text class="f" x="640" y="90">title, type</text><text class="k" x="640" y="104">artist_id FK, track_id FK</text><text class="f" x="640" y="118">start_week, end_week</text><text class="f" x="640" y="132">note</text></g>
+
+<g><rect class="b" x="630" y="184" width="260" height="84"/><rect class="h" x="630" y="184" width="260" height="22"/><text class="ht" x="640" y="199">TrackMediaEvent · junction</text>
+<text class="k" x="640" y="220">track_id PK/FK</text><text class="k" x="640" y="234">media_event_id PK/FK</text><text class="f" x="640" y="248">link_type</text></g>
+
+<g><rect class="b" x="630" y="300" width="260" height="140"/><rect class="h" x="630" y="300" width="260" height="22"/><text class="ht" x="640" y="315">BreakthroughAlert · D-01</text>
+<text class="k" x="640" y="336">id PK</text><text class="k" x="640" y="350">artist_id FK, chart_id FK</text><text class="f" x="640" y="364">type: SLEEPER|NEWCOMER|VIRAL</text><text class="f" x="640" y="378">status: NEW→IN_REVIEW→…</text><text class="f" x="640" y="392">region_code, week, position</text><text class="f" x="640" y="406">confidence, provisional, revised</text><text class="f" x="640" y="420">rule_id</text></g>
+
+<g><rect class="b" x="630" y="472" width="260" height="70"/><rect class="h" x="630" y="472" width="260" height="22"/><text class="ht" x="640" y="487">AlertNote · audit trail</text>
+<text class="k" x="640" y="508">id PK, alert_id FK</text><text class="f" x="640" y="522">week, text</text></g>
+
+<g><rect class="b" x="930" y="40" width="260" height="98"/><rect class="h" x="930" y="40" width="260" height="22"/><text class="ht" x="940" y="55">RuleParams · NFR-02</text>
+<text class="k" x="940" y="76">id PK = 1</text><text class="f" x="940" y="90">top_n, popular_rank, lookback</text><text class="f" x="940" y="104">max_plays, baseline_weeks</text><text class="f" x="940" y="118">growth_factor, decay_weeks</text></g>
+
+<g><rect class="b" x="930" y="170" width="260" height="70"/><rect class="h" x="930" y="170" width="260" height="22"/><text class="ht" x="940" y="185">SimState</text>
+<text class="k" x="940" y="206">id PK = 1</text><text class="f" x="940" y="220">week, lag_platform, lag_until</text></g>
+
+<g><rect x="930" y="272" width="260" height="150" fill="#FBFAF6" stroke="#D2CBBE"/><text x="940" y="292" fill="#12494F" font-size="12" font-weight="600">Решения модели</text>
+<text class="n" x="940" y="310">D-01 алерт M:1 к артисту,</text><text class="n" x="940" y="326">статус-машина вместо флага</text>
+<text class="n" x="940" y="346">D-02 позиции реляционно,</text><text class="n" x="940" y="362">не JSON-снимком</text>
+<text class="n" x="940" y="382">D-03 junction с атрибутами</text>
+<text class="n" x="940" y="402">D-04 ISRC — natural key</text></g>
+
+<path class="l" d="M160,168 V200"/><text class="c" x="166" y="188">1:M</text>
+<path class="l" d="M160,312 V344"/><text class="c" x="166" y="332">1:M</text>
+<path class="l" d="M160,460 V428"/><text class="c" x="166" y="450">1:M</text>
+<path class="l" d="M290,256 H310 V458 H330"/><text class="c" x="296" y="250">1:M</text>
+<path class="l" d="M460,370 V402"/><text class="c" x="466" y="392">1:M</text>
+<path class="l" d="M290,496 H330"/><text class="c" x="296" y="490">1:M</text>
+<path class="l" d="M590,336 H610 V90 H590"/><text class="c" x="596" y="330">1:M</text>
+<path class="l" d="M460,138 V170"/><text class="c" x="466" y="160">1:M</text>
+<path class="l" d="M590,80 H615 V370 H630"/><text class="c" x="596" y="74">1:M</text>
+<path class="l" d="M290,80 H305 V640 H610 V410 H630"/><text class="c" x="296" y="74">1:M</text>
+<path class="l" d="M760,440 V472"/><text class="c" x="766" y="462">1:M</text>
+<path class="l" d="M290,226 H300 V156 H620 V226 H630"/><text class="c" x="306" y="150">1:M</text>
+<path class="l" d="M760,152 V184"/><text class="c" x="766" y="172">1:M</text>
+<text x="30" y="676" class="n">PK — первичный ключ · FK — внешний ключ · UQ — уникальное ограничение · линии читаются «один ко многим»</text>
+</svg>
