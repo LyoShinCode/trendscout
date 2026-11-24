@@ -1,0 +1,103 @@
+/* ============================================================
+   TrendScout · спокойная «отчётная» палитра.
+   Основа — тёплая бумага и типографская краска; сигнальные цвета
+   применяются только к смыслам (рост, всплеск, отказ, задержка).
+   ============================================================ */
+:root{
+  /* бумага и поверхности */
+  --paper:#F6F4EF;
+  --surface:#FFFFFF;
+  --surface-2:#FBFAF6;
+  --overlay:#FFFFFF;
+  --scrim:rgba(28,26,22,.42);
+
+  /* краска */
+  --ink:#1C1A17;
+  --ink-2:#403C36;
+  --muted:#6E685E;
+  --faint:#948D82;
+
+  /* линии */
+  --line:#E4DFD5;
+  --line-2:#D2CBBE;
+  --line-3:#BFB6A6;
+
+  /* доминанта: студийный тёмный тиал */
+  --brand:#12494F;
+  --brand-2:#0D373C;
+  --brand-soft:#E7EFEF;
+  --brand-line:#BBD2D2;
+
+  /* сигнальные оттенки */
+  --blue:#1F5FD0;      --blue-soft:#E8EFFB;
+  --moss:#2F7A45;      --moss-soft:#E8F2E9;
+  --amber:#A96A05;     --amber-soft:#FBF0DE;
+  --crimson:#B3261E;   --crimson-soft:#FBEAE8;
+  --plum:#6B3FA0;      --plum-soft:#F0EAF8;
+  --slate:#4E6E8E;     --bronze:#8A6A3B;
+
+  /* семантика */
+  --ok:var(--moss);      --ok-soft:var(--moss-soft);
+  --warn:var(--amber);   --warn-soft:var(--amber-soft);
+  --danger:var(--crimson);--danger-soft:var(--crimson-soft);
+  --info:var(--blue);    --info-soft:var(--blue-soft);
+
+  /* графики: 8 различимых по тону и светлоте */
+  --c1:#12494F; --c2:#1F5FD0; --c3:#A96A05; --c4:#6B3FA0;
+  --c5:#2F7A45; --c6:#B3261E; --c7:#4E6E8E; --c8:#8A6A3B;
+
+  /* типографика */
+  --serif:'IBM Plex Serif',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+
+  /* ритм */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
+  --r1:6px; --r2:10px; --r3:14px; --pill:999px;
+  --nav:60px;
+  --maxw:1400px;
+
+  /* глубина — мягкая, без свечения */
+  --sh1:0 1px 2px rgba(28,26,22,.05);
+  --sh2:0 4px 14px rgba(28,26,22,.07);
+  --sh3:0 18px 48px rgba(28,26,22,.16);
+
+  --t:.18s ease;
+  --z-nav:60; --z-sticky:20; --z-drawer:80; --z-hud:70; --z-toast:100;
+}
+
+html[data-theme="dark"]{
+  --paper:#16181A;
+  --surface:#1E2124;
+  --surface-2:#232629;
+  --overlay:#232629;
+  --scrim:rgba(0,0,0,.6);
+
+  --ink:#ECE9E3;
+  --ink-2:#C8C4BC;
+  --muted:#9C978D;
+  --faint:#7C776E;
+
+  --line:#33373B;
+  --line-2:#43484D;
+  --line-3:#565C62;
+
+  --brand:#7FB8BC;
+  --brand-2:#9CCBD0;
+  --brand-soft:#1D2A2C;
+  --brand-line:#2F4548;
+
+  --blue:#7FA9F0;   --blue-soft:#1C2431;
+  --moss:#7DBE8C;   --moss-soft:#1B2721;
+  --amber:#D9A44E;  --amber-soft:#2C2418;
+  --crimson:#E08A82;--crimson-soft:#2E1D1B;
+  --plum:#B49AD8;   --plum-soft:#241E30;
+  --slate:#93AEC7;  --bronze:#C0A277;
+
+  --c1:#7FB8BC; --c2:#7FA9F0; --c3:#D9A44E; --c4:#B49AD8;
+  --c5:#7DBE8C; --c6:#E08A82; --c7:#93AEC7; --c8:#C0A277;
+
+  --sh1:0 1px 2px rgba(0,0,0,.3);
+  --sh2:0 4px 14px rgba(0,0,0,.35);
+  --sh3:0 18px 48px rgba(0,0,0,.55);
+}
