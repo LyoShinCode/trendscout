@@ -39,7 +39,7 @@ flowchart TD
     H -- нет --> J{FR-03: событие активно и рост ≥ ×2.5?}
     J -- да --> K[VIRAL]
     J -- нет --> L[Журнал «Отказ»]
-    G --> M[confidence, дедуп 8 нед, алерт + provisional]
+    G --> M[confidence, дедап 8 нед, алерт + provisional]
     I --> M
     K --> M
     M --> N[Пост-шаги: ревизия FR-04, отчёт затухания FR-03]
